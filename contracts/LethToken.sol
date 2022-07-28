@@ -7,15 +7,18 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract lEth is ERC20, Ownable {
     constructor(
     ) ERC20("LendETH", "lETH") {}
-        
+
     function init(
         address LendingPool
-    ) private onlyOwner() {
+    ) public onlyOwner() {
 
     }
 
-    function redeemFromLendingPool(uint amount) public payable {
+    function mint(uint amount) public onlyOwner {
+        _mint(msg.sender, amount);
+    }
+
+    function redeemFromLendingPool(uint amount) public  payable {
         _burn(msg.sender, amount);
-        
     }
 }
