@@ -13,9 +13,12 @@ contract LendingPool {
 
     lEth public LendEth;
 
-    function withdraw(uint amount) public {
-
+    function withdraw(address asset, uint amount, address onBehalfOf) public {
+        require(onBehalfOf == msg.sender);
+        LendEth.redeemFromLendingPool(onBehalfOf, amount);
+        IERC20(asset).transferFrom(address(this), onBehalfOf, amount);
     }
+    
     function deposit(address asset, uint amount, address onBehalfOf) public {
         require(onBehalfOf == msg.sender);
         IERC20(asset).transferFrom(msg.sender, address(this), amount);

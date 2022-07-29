@@ -10,11 +10,11 @@ contract lEth is ERC20, Ownable {
     ) ERC20("LendETH", "lETH") {}
   
 
-    function redeemFromLendingPool(uint amount) internal {
-        _burn(msg.sender, amount);
+    function redeemFromLendingPool(address sender, uint amount) external {
+        _burn(sender, amount);
     }
 
-    function mintFromLendingPool(uint amount, address sender) public  payable {
+    function mintFromLendingPool(uint amount, address sender) external {
         _mint(sender, amount);
     }
 }
