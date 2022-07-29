@@ -1,12 +1,27 @@
 // SPDX-License-Identifier: agpl-3.0
-pragma solidity ^0.8.0;
+pragma solidity ^0.8.3;
+import "./LethToken.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
+
+interface InterfacelETH {
+    function _mint() external view returns (address, uint);
+
+}
 
 contract LendingPool {
 
-    
-    mapping (address => uint) balances;
-    function withdraw(address from, uint amount) public {}
-    function deposit() public {}
+    lEth public LendEth;
+
+    function withdraw(uint amount) public {
+
+    }
+    function deposit(address asset, uint amount, address onBehalfOf) public {
+        require(onBehalfOf == msg.sender);
+        IERC20(asset).transferFrom(msg.sender, address(this), amount);
+        LendEth.mintFromLendingPool(amount, onBehalfOf);
+        
+    }
     function borrow() public {}
     function repayBorrow() public {}
 }
