@@ -10,15 +10,11 @@ contract LendingPool {
     lEth public lETH;
     address wEth = 0xc778417E063141139Fce010982780140Aa0cD5Ab;
 
-    function approval(uint _amount) public {
-        ERC20(wEth).approve(address(this), _amount);
-    }
 
-    function deposit(uint _amount) public payable {
+    function deposit(uint _amount, address LendETH) public payable {
         _balances[msg.sender] += _amount;
-        approval(_amount);
-        lETH.mint(_amount, msg.sender);
-        ERC20(wEth).transferFrom(msg.sender, address(this), _amount);
+        lEth(LendETH).mint(_amount, msg.sender);
+        ERC20(address(wEth)).transferFrom(msg.sender, address(this), _amount);
     }
     
 
@@ -38,7 +34,7 @@ contract LendingPool {
 
     function repayBorrow(uint _amount) public payable {
         require(_borrowAmount[msg.sender] >= _amount);
-        approval(_amount);
+        require(_borrowAmount[msg.sender] > 0);
         _borrowAmount[msg.sender] -= _amount;
          ERC20(wEth).transferFrom(msg.sender, address(this), _amount);
 
