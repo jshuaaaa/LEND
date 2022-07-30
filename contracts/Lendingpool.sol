@@ -18,11 +18,11 @@ contract LendingPool {
     }
     
 
-    function withdraw(uint _amount) public payable {
+    function withdraw(uint _amount, address LendETH) public payable {
         require(_balances[msg.sender] >= _amount);
         _balances[msg.sender] -= _amount;
         ERC20(wEth).transfer(msg.sender, _amount);
-        lETH.redeem(msg.sender, _amount);
+        lEth(LendETH).redeem(msg.sender, _amount);
     }
 
 
@@ -36,7 +36,7 @@ contract LendingPool {
         require(_borrowAmount[msg.sender] >= _amount);
         require(_borrowAmount[msg.sender] > 0);
         _borrowAmount[msg.sender] -= _amount;
-         ERC20(wEth).transferFrom(msg.sender, address(this), _amount);
+        ERC20(wEth).transferFrom(msg.sender, address(this), _amount);
 
     }
 }
