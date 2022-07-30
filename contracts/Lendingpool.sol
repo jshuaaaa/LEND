@@ -67,6 +67,12 @@ contract LendingPool {
         uint rewardsOwed = (hasStakedSince[msg.sender] - block.timestamp);
         rewardsOwed = rewardsOwed / 1000;
 
+
+        // Incentivizes users to borrow by increasing the LEND token they get    
+        if(_borrowAmount[msg.sender] >= _balances[msg.sender] * 50/100 ) {
+            rewardsOwed = rewardsOwed * 130/100;
+        }
+
         // Every 4 weeks rewards emitted gets cut in half
         if(block.timestamp >= stakingTimeTracker + 4 weeks) {
             rewardsOwed = rewardsOwed/2;
