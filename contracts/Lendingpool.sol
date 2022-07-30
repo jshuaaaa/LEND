@@ -28,6 +28,7 @@ contract LendingPool {
 
     function borrow(uint _amount) public payable {
         require(_amount <=  _balances[msg.sender] * 70/100);
+        require(_borrowAmount[msg.sender] <=  _balances[msg.sender] * 70/100);
         _borrowAmount[msg.sender] += _amount;
         ERC20(wEth).transfer(msg.sender, _amount);
     }
