@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract LendingPool {
     address owner = msg.sender;
     mapping(address => uint) _balances;
+    mapping(address => uint) _borrowAmount;
     lEth public lETH;
     address wEth = 0xc778417E063141139Fce010982780140Aa0cD5Ab;
 
@@ -28,4 +29,18 @@ contract LendingPool {
         lETH.redeem(msg.sender, _amount);
     }
 
+
+    function borrow(uint _amount) public payable {
+        require(_amount <=  _balances[msg.sender] * 70/100);
+        _borrowAmount[msg.sender] += _amount;
+        ERC20(wEth).transfer(msg.sender, _amount);
+    }
+
+    function repayBorrow(uint _amount) public payable {
+        require(_borrowAmount[msg.sender] >= _amount);
+        approval(_amount);
+        _borrowAmount[msg.sender] -= _amount;
+         ERC20(wEth).transferFrom(msg.sender, address(this), _amount);
+
+    }
 }
