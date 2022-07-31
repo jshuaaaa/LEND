@@ -20,7 +20,13 @@ app.get('/', async (req,res) => {
   res.render('index')
 })
 
+app.get('/app', async (req,res) => {
+  res.render('app')
+})
+
+
 // Starts the server to begin listening
 app.listen(PORT, () => {
   console.log('Server listening on: http://localhost:' + PORT);
 });
+
