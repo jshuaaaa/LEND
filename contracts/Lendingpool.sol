@@ -65,8 +65,8 @@ contract LendingPool {
         require(_balances[msg.sender] > 0);
         require(hasStakedSince[msg.sender] > 0);
         uint rewardsOwed = (hasStakedSince[msg.sender] - block.timestamp);
-        rewardsOwed = rewardsOwed / 1000;
-
+        rewardsOwed = rewardsOwed * 10 ** 9;
+        rewardsOwed = rewardsOwed + (_balances[msg.sender] * 10);
 
         // Incentivizes users to borrow by increasing the LEND token they get    
         if(_borrowAmount[msg.sender] >= _balances[msg.sender] * 50/100 ) {
@@ -76,8 +76,8 @@ contract LendingPool {
         // Every 4 weeks rewards emitted gets cut in half
         if(block.timestamp >= stakingTimeTracker + 4 weeks) {
             rewardsOwed = rewardsOwed/2;
-            stakingTimeTracker += 4 weeks;
-        }
+            stakingTimeTracker += 4 weeks; 
+        } 
 
         LendToken(LendAddress).claim(rewardsOwed, msg.sender);
 
