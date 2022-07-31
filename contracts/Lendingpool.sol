@@ -33,6 +33,8 @@ contract LendingPool {
     
 
     function withdraw(uint _amount, address LendETH) public payable {
+        // Takes the amount of lEth is in the wallet and sets it equal to _balances, leading lEth to be a tokenized form of collateral
+        _balances[msg.sender] = lEth(LendETH).balanceOf(msg.sender);
         require(_balances[msg.sender] >= _amount);
         _balances[msg.sender] -= _amount;
         
@@ -40,7 +42,7 @@ contract LendingPool {
         isStaked[msg.sender] = false;
         hasStakedSince[msg.sender] = 0;
         }
-
+        
         ERC20(wEth).transfer(msg.sender, _amount);
         lEth(LendETH).redeem(msg.sender, _amount);
     }

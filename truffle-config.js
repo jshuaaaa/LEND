@@ -1,5 +1,4 @@
-const HDWalletProvider = require('@truffle/hdwallet-provider')
-const PrivateKey = ['']
+
 
 /**
  * Use this file to configure your truffle project. It's seeded with some
@@ -21,10 +20,10 @@ const PrivateKey = ['']
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
-//
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const HDWalletProvider = require('@truffle/hdwallet-provider');
+
+const fs = require('fs');
+const mnemonic = fs.readFileSync(".env").toString().trim();
 
 module.exports = {
   /**
@@ -37,7 +36,7 @@ module.exports = {
    * $ truffle test --network <network-name>
    */
 
-  networks: {
+  networks: { 
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
     // You should run a client (like ganache, geth, or parity) in a separate terminal
@@ -72,12 +71,13 @@ module.exports = {
     // },
     //
     // Useful for private networks
-    // private: {
-    //   provider: () => new HDWalletProvider(mnemonic, `https://network.io`),
-    //   network_id: 2111,   // This network is yours, in the cloud.
-    //   production: true    // Treats this network as if it was a public net. (default: false)
-    // }
+    rinkeby: {
+      provider: () => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/1a2bbfa3895b4335b74a963eda5aadc5`),
+      network_id: 4,   // This network is yours, in the cloud.
+      production: true    // Treats this network as if it was a public net. (default: false)
+    }
   },
+  
 
   // Set default mocha options here, use special reporters, etc.
   mocha: {
