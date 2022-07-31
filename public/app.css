@@ -1,0 +1,35 @@
+a {
+    text-decoration: none;
+    color: white;
+  }
+
+  main {
+    color:white;
+    display: flex;
+    justify-content: center;
+
+  }
+
+  main h1 {
+    margin-top: 30px;
+    font-size: 72px;
+    margin: 0;
+  }
+
+  .app-container {
+    border: 2px solid black;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    margin: 20px;
+  }
+
+  .app-container div {
+    height: 250px;
+    border: 2px solid black;
+    width: 250px;
+    margin: 20px;
+    
+
+  }
