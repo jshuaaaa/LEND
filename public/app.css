@@ -1,3 +1,7 @@
+body {
+    color:white
+}
+
 a {
     text-decoration: none;
     color: white;
@@ -16,6 +20,7 @@ a {
     margin: 0;
   }
 
+
   .app-container {
     border: 2px solid black;
     height: 400px;
@@ -23,13 +28,26 @@ a {
     justify-content: center;
     gap: 50px;
     margin: 20px;
+    margin-left: 200px;
+    margin-right: 200px;
   }
 
   .app-container div {
-    height: 250px;
+    max-height: 50px;
     border: 2px solid black;
-    width: 250px;
+    max-width: 350px;
+    width: 350px;
+    height: 50px;
     margin: 20px;
     
 
+  }
+
+  .app-container section {
+    max-height: 350px;
+    border: 2px solid black;
+    max-width: 400px;
+    width: 400px;
+    height: 350px;
+    margin: 20px;
   }
