@@ -1,6 +1,14 @@
 
 
 console.log(web3);
+const getUrl = 'https://api-rinkeby.etherscan.io/api?module=contract&action=getabi&address=0xc778417E063141139Fce010982780140Aa0cD5Ab&apikey=SQWXRK643SGCDWAEQBVAAKYPWH8GV9GPUW'
+
+const getAbi = async (url) => {
+    let res = await axios.get(url)
+    let abi = JSON.parse(res.data.result)
+    return  abi;
+
+}
 
 
 if (typeof web3 !== 'undefined') {
@@ -13,6 +21,17 @@ if (typeof web3 !== 'undefined') {
 const lEthAddress = "0x1623c85b75b733ED060ceb44179FEBeAD98a81C1"
 const LendingPoolAddress = "0xdb1D595AD158fFFEC5AaD58315786c9Ac69319E4"
 const LendTokenAddress = "0x584BA1ab9786279253778b8455a7B87f3c1b2Bd8"
+const wEthAddress = "0xc778417E063141139Fce010982780140Aa0cD5Ab"
+
+
+async function wEthApproval(account) {
+    console.log('ttt')
+    const wETHAbi = await getAbi(getUrl);
+    const wEth = new web3.eth.Contract(wETHAbi, wEthAddress)
+    wEth.methods.approve(LendingPoolAddress, "9999999999999999999999999999999999999").send({from: account})
+}
+
+
 
 const lEth= new web3.eth.Contract([
     {
@@ -840,3 +859,5 @@ const LendToken = new web3.eth.Contract([
       "type": "function"
     }
   ], LendTokenAddress)
+
+console.log(lEth)
