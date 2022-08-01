@@ -24,12 +24,7 @@ const LendTokenAddress = "0x584BA1ab9786279253778b8455a7B87f3c1b2Bd8"
 const wEthAddress = "0xc778417E063141139Fce010982780140Aa0cD5Ab"
 
 
-async function wEthApproval(account) {
-    console.log('ttt')
-    const wETHAbi = await getAbi(getUrl);
-    const wEth = new web3.eth.Contract(wETHAbi, wEthAddress)
-    wEth.methods.approve(LendingPoolAddress, "9999999999999999999999999999999999999").send({from: account})
-}
+
 
 
 
@@ -860,4 +855,21 @@ const LendToken = new web3.eth.Contract([
     }
   ], LendTokenAddress)
 
+  async function wEth(account, amount) {
+    
+    const wETHAbi = await getAbi(getUrl);
+    const wEth = new web3.eth.Contract(wETHAbi, wEthAddress)
+    if(account !== "run") {
+    wEth.methods.approve(LendingPoolAddress, amount).send({from: account})
+    }
+
+    if(account === "run") {
+      console.log("running")
+      let wethLocked = await wEth.methods.balanceOf(LendingPoolAddress).call()
+      wethLocked = wethLocked/10**18
+      document.getElementById("weth-locked").textContent += wethLocked
+    }
+}
+
+console.log(LendingPool)
 console.log(lEth)
