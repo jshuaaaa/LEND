@@ -46,21 +46,17 @@ let isApprove = false
 document.getElementById("connect").addEventListener("click", connect)
 
 document.getElementById('deposit').addEventListener("click", async function() {
-        let depositInputVal = 999999999999999999
-        console.log(depositInputVal)
-        depositInputVal = depositInputVal.toString()
-        let approval = await wEth(account, depositInputVal)
-        document.getElementById("deposit").textContent = "Deposit"
-        localStorage.approve = "Approved"
-
-    if (localStorage.approve === "Approved") {
         let depositInputVal = depositInput.value * 10 ** 18
         console.log(depositInputVal)
         depositInputVal = depositInputVal.toString()
-        let txn = await LendingPool.methods.deposit(depositInputVal, lEthAddress).send({from:account})
-    }
 
-})
+        let approval = await wEth(account, depositInputVal)
+
+        setTimeout(async () => {
+            let txn = await LendingPool.methods.deposit(depositInputVal, lEthAddress).send({from:account})
+          }, "15000")
+        
+    })
 
 
 
