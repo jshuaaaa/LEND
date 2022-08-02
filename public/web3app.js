@@ -43,7 +43,7 @@ async function connect() {
 
 let isApprove = false
 
-document.getElementById("connect").addEventListener("click", connect())
+document.getElementById("connect").addEventListener("click", connect)
 
 document.getElementById('deposit').addEventListener("click", async function() {
         let depositInputVal = 999999999999999999
