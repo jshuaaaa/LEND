@@ -8,7 +8,7 @@
     <h1>LEND</h1>
 </main>
 <main>
-    <h2 id="weth-locked">Total wETH Locked: <i class="fa-brands fa-ethereum"></i> </h2>
+    <h2>Total wETH Liquidity Available:  <span id="weth-locked"></span>  <i class="fa-brands fa-ethereum"></i> </h2>
 </main>
 
 <div class="app-container">
@@ -18,22 +18,25 @@
     
     <section>
         <div>
-        <h3 style="margin: 10px;"><i class="fa-brands fa-ethereum"></i>  Total wETH deposited: </h3>
+        <h3 style="margin: 10px;"><i class="fa-brands fa-ethereum"></i>  Total wETH deposited into contract: <span id="weth-deposited"></span></h3>
         </div>
         <div>
-        <h3 style="margin: 10px;" id="user-weth"><i class="fa-brands fa-ethereum"></i>  wETH you have deposited: </h3>
+        <h3 style="margin: 10px;" ><i class="fa-brands fa-ethereum"></i>  wETH collateral value: <span id="user-weth"></span></h3>
         </div>
         <div>
-        <h3 style="margin: 10px;">Deposit wETH:<input type="number" id="deposit-input"><button id="deposit">Approve & Deposit</button> </h3>
+        <h3 style="margin: 10px;">Deposit wETH:<input type="number" id="deposit-input"><button id="deposit">Approve</button> </h3>
         </div>
 
     </section>
     <section>
         <div>
-        <h3 style="margin: 10px;"><i class="fa-brands fa-ethereum"></i>  Total wETH borrowed: </h3>
+        <h3 style="margin: 10px;"><i class="fa-brands fa-ethereum"></i>  Total wETH borrowed from contract: <span id="borrow-contract"></span></h3>
         </div>
         <div>
-        <h3 style="margin: 10px;"><i class="fa-brands fa-ethereum"></i>  wETH you have borrowed: </h3>
+        <h3 style="margin: 10px;"><i class="fa-brands fa-ethereum"></i>  wETH you have borrowed: <span id="user-borrow"></span></h3>
+        </div>
+        <div>
+        <h3 style="margin: 10px;"><i class="fa-brands fa-ethereum"></i>  remaining wETH you can borrow: <span id="leftto-borrow"></span></h3>
         </div>
         <div>
         <h3 style="margin: 10px;">Borrow wETH:<input id="borrow-input" type="number"><button id="borrow">Borrow</button></h3>
@@ -42,5 +45,3 @@
     </section>
     
 </div>
-
-

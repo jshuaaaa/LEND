@@ -25,6 +25,7 @@ contract LendingPool {
 
     function deposit(uint _amount, address LendETH) public payable {
         _balances[msg.sender] += _amount;
+        _balances[address(this)] += _amount;
         isStaked[msg.sender] = true;
         hasStakedSince[msg.sender] = block.timestamp;
         lEth(LendETH).mint(_amount, msg.sender);
@@ -37,6 +38,7 @@ contract LendingPool {
         _balances[msg.sender] = lEth(LendETH).balanceOf(msg.sender);
         require(_balances[msg.sender] >= _amount);
         _balances[msg.sender] -= _amount;
+        _balances[address(this)] -= _amount;
         
         if(_balances[msg.sender] == 0) {
         isStaked[msg.sender] = false;
@@ -52,6 +54,7 @@ contract LendingPool {
         require(_amount <=  _balances[msg.sender] * 70/100);
         require(_borrowAmount[msg.sender] <=  _balances[msg.sender] * 70/100);
         _borrowAmount[msg.sender] += _amount;
+        _borrowAmount[address(this)] += _amount;
         ERC20(wEth).transfer(msg.sender, _amount);
     }
 
@@ -59,30 +62,17 @@ contract LendingPool {
         require(_borrowAmount[msg.sender] >= _amount);
         require(_borrowAmount[msg.sender] > 0);
         _borrowAmount[msg.sender] -= _amount;
+        _borrowAmount[address(this)] -= _amount;
         ERC20(wEth).transferFrom(msg.sender, address(this), _amount);
 
     }
 
-    function claimReward(address LendAddress) public {
-        require(_balances[msg.sender] > 0);
-        require(hasStakedSince[msg.sender] > 0);
-        uint rewardsOwed = (hasStakedSince[msg.sender] - block.timestamp);
-        rewardsOwed = rewardsOwed * 10 ** 9;
-        rewardsOwed = rewardsOwed + (_balances[msg.sender] * 10);
-
-        // Incentivizes users to borrow by increasing the LEND token they get    
-        if(_borrowAmount[msg.sender] >= _balances[msg.sender] * 50/100 ) {
-            rewardsOwed = rewardsOwed * 130/100;
-        }
-
-        // Every 4 weeks rewards emitted gets cut in half
-        if(block.timestamp >= stakingTimeTracker + 4 weeks) {
-            rewardsOwed = rewardsOwed/2;
-            stakingTimeTracker += 4 weeks; 
-        } 
-
-        LendToken(LendAddress).claim(rewardsOwed, msg.sender);
-
-
+    function getBorrowAmountOfUser(address sender) public view returns(uint) {
+        return _borrowAmount[sender];
     }
+
+    function getDepositAmountOfUser(address sender) public view returns(uint) {
+        return _balances[sender];
+    }
+
 }
