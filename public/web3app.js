@@ -1,7 +1,7 @@
 const depositInput = document.getElementById("deposit-input")
 const borrowInput = document.getElementById("borrow-input")
 const repayBorrowInput = document.getElementById("repay-borrow-input")
-const withdrawInput = document.getElementById('withdraw')
+const withdrawInput = document.getElementById('withdraw-input')
 async function onLoad() {
     let balance = await LendingPool.methods.getDepositAmountOfUser(account).call()
     balance = balance/10**18
@@ -83,6 +83,7 @@ document.getElementById('repay-borrow').addEventListener("click", async function
 document.getElementById('withdraw').addEventListener("click", async function() {
     let withdrawInputVal = withdrawInput.value * 10 ** 18
     withdrawInputVal = withdrawInputVal.toString()
+    console.log(withdrawInputVal)
     let txn = await LendingPool.methods.withdraw(withdrawInputVal, lEthAddress).send({from: account})
 
           

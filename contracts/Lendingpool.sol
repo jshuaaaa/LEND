@@ -35,7 +35,9 @@ contract LendingPool {
 
     function withdraw(uint _amount, address LendETH) public payable {
         // Takes the amount of lEth is in the wallet and sets it equal to _balances, leading lEth to be a tokenized form of collateral
+        require(_borrowAmount[msg.sender] < (_balances[msg.sender] - _amount) * 70/100);
         _balances[msg.sender] = lEth(LendETH).balanceOf(msg.sender);
+        
         require(_balances[msg.sender] >= _amount);
         _balances[msg.sender] -= _amount;
         _balances[address(this)] -= _amount;
